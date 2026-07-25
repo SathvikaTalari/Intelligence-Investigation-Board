@@ -63,17 +63,18 @@ export function TopBar() {
 
       {/* CENTER: Quote sticky note */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 px-4 py-2 max-w-[220px] relative z-10 transform rotate-[0.5deg]"
+        className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 px-6 py-2.5 max-w-[440px] w-full relative z-10 transform rotate-[0.5deg] rounded-xs"
         style={{
-          background: 'linear-gradient(145deg, #e8d3a0 0%, #dfc899 100%)',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px rgba(90,59,28,0.3)',
+          background: 'linear-gradient(145deg, #f0dfb5 0%, #e2ce9e 100%)',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.6), 0 0 0 1px rgba(90,59,28,0.4)',
         }}
       >
-        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#5a4a2c]" />
-        <p className="font-cormorant italic text-[10px] text-[#3a2510] leading-snug text-center">
-          "Every clue, no matter how small,<br />brings us closer to the truth."
+        {/* Red Pushpin at top center */}
+        <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#8b2e2e] border border-[#3a0808] shadow-md" />
+        <p className="font-serif italic text-sm font-extrabold text-[#2a1505] leading-snug text-center tracking-wide">
+          "Every clue, no matter how small, brings us closer to the truth."
         </p>
-        <p className="text-right text-[8px] font-inter text-[#5a3b1c] mt-1">— Sherlock Holmes</p>
+        <p className="text-right text-[11px] font-mono font-extrabold text-[#8b2e2e] mt-1 tracking-wider">— Sherlock Holmes</p>
       </div>
 
       {/* RIGHT: Search + actions + avatar */}
