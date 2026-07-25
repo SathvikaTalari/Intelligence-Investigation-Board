@@ -9,14 +9,12 @@ import type { Case } from '../types';
 
 const paperTextureStyle = {
   background: 'linear-gradient(145deg, #e4cdad 0%, #d8be99 30%, #ceb086 70%, #c4a274 100%)',
-  boxShadow: '0 6px 25px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.2)',
   border: '1px solid rgba(90,59,28,0.5)',
 };
 
 const cardDarkStyle = {
   background: 'linear-gradient(150deg, #1c1309 0%, #150d05 50%, #100a03 100%)',
   border: '1px solid rgba(90,59,28,0.3)',
-  boxShadow: '0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03)',
 };
 
 function FinePaperNoise() {
@@ -82,7 +80,7 @@ function StatFolderCard({
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
       onClick={onClick}
-      className="relative overflow-hidden rounded-sm cursor-pointer group"
+      className="relative overflow-hidden rounded-sm cursor-pointer group shadow-vintage-soft"
       style={paperTextureStyle}
     >
       <FinePaperNoise />
@@ -335,7 +333,7 @@ export function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
           {/* 1. CASE OVERVIEW */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Case Overview
             </p>
@@ -343,7 +341,7 @@ export function Dashboard() {
           </div>
 
           {/* 2. CASE STATUS */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Case Status
             </p>
@@ -351,7 +349,7 @@ export function Dashboard() {
           </div>
 
           {/* 3. EVIDENCE CATEGORIES */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-3">
               Evidence Categories
             </p>
@@ -382,7 +380,7 @@ export function Dashboard() {
           </div>
 
           {/* 4. PRIORITY CASES (Aged Paper Folder Document) */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={paperTextureStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1" style={paperTextureStyle}>
             <FinePaperNoise />
             {/* Red Pushpin at Top */}
             <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#8b2e2e] border-2 border-[#3a0808] shadow-md z-20" />
@@ -430,7 +428,7 @@ export function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
           {/* 1. RECENT ACTIVITY */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 rounded-full bg-[#8b2e2e] animate-ping" />
               <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a]">
@@ -458,7 +456,7 @@ export function Dashboard() {
           </div>
 
           {/* 2. CASE HEAT MAP */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-3">
               Case Heat Map
             </p>
@@ -493,7 +491,7 @@ export function Dashboard() {
           </div>
 
           {/* 3. INVESTIGATOR PERFORMANCE */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Investigator Performance
             </p>
@@ -529,7 +527,7 @@ export function Dashboard() {
           </div>
 
           {/* 4. TASK OVERVIEW (Aged Paper Card) */}
-          <div className="relative overflow-hidden p-4 rounded-sm" style={paperTextureStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1" style={paperTextureStyle}>
             <FinePaperNoise />
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#4a2e14] mb-3">
               Task Overview

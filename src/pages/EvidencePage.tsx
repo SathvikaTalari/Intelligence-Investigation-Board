@@ -244,7 +244,7 @@ export function EvidencePage() {
               whileHover={{ scale: 1.02, y: -3 }}
               onClick={() => setSelectedEvd(evd)}
               className={cn(
-                "p-3 rounded-xs border shadow-2xl relative cursor-pointer transition-all overflow-hidden flex flex-col justify-between",
+                "p-3 rounded-sm border shadow-vintage-soft relative cursor-pointer transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col justify-between",
                 viewMode === 'list' ? "flex-row items-center p-4" : ""
               )}
               style={{
