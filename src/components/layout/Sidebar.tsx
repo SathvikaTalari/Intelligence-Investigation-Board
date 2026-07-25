@@ -238,13 +238,23 @@ export function Sidebar() {
         </div>
       </div>
 
-      {/* CONFIDENTIAL stamp */}
+      {/* === LOGOUT / LOCK DESK BUTTON === */}
       <div className="relative z-10 p-2 text-center" style={{ borderTop: '1px solid rgba(90,59,28,0.2)' }}>
+        <NavLink
+          to="/login"
+          className="flex items-center justify-center gap-2 w-full py-2 px-3 bg-[#8b2e2e]/20 hover:bg-[#8b2e2e]/40 border border-[#8b2e2e]/50 text-[#f5e6c8] text-xs font-cinzel font-bold uppercase tracking-wider rounded-xs transition-colors mb-2"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5 text-[#8b2e2e]">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>LOCK DESK</span>
+        </NavLink>
+
         <div
-          className="inline-block px-4 py-1.5 border-2 transform -rotate-1"
+          className="inline-block px-4 py-1 border-2 transform -rotate-1 opacity-80"
           style={{ borderColor: '#8b2e2e', color: '#8b2e2e' }}
         >
-          <span className="font-cinzel text-xs font-bold tracking-[0.25em] uppercase">Confidential</span>
+          <span className="font-cinzel text-[10px] font-bold tracking-[0.2em] uppercase">Confidential</span>
         </div>
       </div>
     </aside>

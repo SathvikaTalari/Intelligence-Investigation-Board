@@ -20,6 +20,7 @@ const searchDatabase = [
 export function TopBar() {
   const navigate = useNavigate();
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -125,25 +126,61 @@ export function TopBar() {
         <div className="w-px h-8 bg-[#5a3b1c]/30" />
 
         {/* Detective profile */}
-        <div
-          onClick={() => navigate('/settings')}
-          className="flex items-center gap-3 cursor-pointer group"
-        >
+        <div className="relative">
           <div
-            className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
-            style={{ border: '2px solid rgba(200,155,60,0.3)' }}
+            onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+            className="flex items-center gap-3 cursor-pointer group"
           >
-            <img
-              src="/detective_bg.png"
-              alt="Detective"
-              className="w-full h-full object-cover grayscale contrast-125"
-            />
+            <div
+              className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
+              style={{ border: '2px solid rgba(200,155,60,0.3)' }}
+            >
+              <img
+                src="/detective_bg.png"
+                alt="Detective"
+                className="w-full h-full object-cover grayscale contrast-125"
+              />
+            </div>
+            <div>
+              <p className="text-[9px] font-inter text-[#5a4a2c] uppercase tracking-wider">Detective</p>
+              <p className="text-[13px] font-inter text-[#c89b3c] font-medium leading-none">Arjun Rathore</p>
+            </div>
+            <ChevronDown className="w-3 h-3 text-[#5a4a2c] group-hover:text-[#c89b3c]" />
           </div>
-          <div>
-            <p className="text-[9px] font-inter text-[#5a4a2c] uppercase tracking-wider">Detective</p>
-            <p className="text-[13px] font-inter text-[#c89b3c] font-medium leading-none">Arjun Rathore</p>
-          </div>
-          <ChevronDown className="w-3 h-3 text-[#5a4a2c]" />
+
+          {/* Profile Dropdown Menu */}
+          <AnimatePresence>
+            {profileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="absolute right-0 top-12 w-48 bg-[#1e140a] border border-[#5a3b1c] rounded-xs shadow-2xl z-50 p-2 space-y-1 font-inter text-xs"
+              >
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    navigate('/settings');
+                  }}
+                  className="w-full flex items-center gap-2 p-2 text-[#f5e6c8] hover:bg-[#3d2612] rounded-xs transition-colors"
+                >
+                  <span>⚙️</span>
+                  <span>Bureau Settings</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setProfileMenuOpen(false);
+                    navigate('/login');
+                  }}
+                  className="w-full flex items-center gap-2 p-2 text-[#8b2e2e] hover:bg-red-900/20 rounded-xs transition-colors font-bold"
+                >
+                  <span>🔒</span>
+                  <span>Lock Desk (Logout)</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
