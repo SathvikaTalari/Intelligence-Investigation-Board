@@ -63,18 +63,21 @@ export function TopBar() {
 
       {/* CENTER: Quote sticky note */}
       <div
-        className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 px-6 py-2.5 max-w-[440px] w-full relative z-10 transform rotate-[0.5deg] rounded-xs"
+        className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 px-6 py-2.5 max-w-[380px] w-full hidden md:flex flex-col items-center justify-center z-10 transform rotate-[0.5deg] rounded-xs border border-[#5a3b1c]/40 shadow-xl"
         style={{
-          background: 'linear-gradient(145deg, #f0dfb5 0%, #e2ce9e 100%)',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.6), 0 0 0 1px rgba(90,59,28,0.4)',
+          background: 'linear-gradient(145deg, #f0dfb3 0%, #e5cf9d 100%)',
+          boxShadow: '0 6px 16px rgba(0,0,0,0.5), 0 0 0 1px rgba(90,59,28,0.4)',
         }}
       >
-        {/* Red Pushpin at top center */}
-        <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#8b2e2e] border border-[#3a0808] shadow-md" />
-        <p className="font-serif italic text-sm font-extrabold text-[#2a1505] leading-snug text-center tracking-wide">
+        {/* Brass pushpin at top */}
+        <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#8b2e2e] border border-[#3a0808] shadow-md" />
+        
+        <p className="font-playfair italic text-xs md:text-sm font-bold text-[#2a1708] leading-tight text-center tracking-wide">
           "Every clue, no matter how small, brings us closer to the truth."
         </p>
-        <p className="text-right text-[11px] font-mono font-extrabold text-[#8b2e2e] mt-1 tracking-wider">— Sherlock Holmes</p>
+        <p className="text-right w-full text-[10px] font-mono font-bold text-[#8b2e2e] mt-0.5 pr-1">
+          — Sherlock Holmes
+        </p>
       </div>
 
       {/* RIGHT: Search + actions + avatar */}
