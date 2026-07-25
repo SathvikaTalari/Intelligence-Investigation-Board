@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-primary-bg text-txt-main font-inter;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Vintage scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-bg;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-leather rounded-full border border-border-main;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-copper;
+  }
+}
+
+@layer utilities {
+  .vintage-panel {
+    @apply bg-card-bg border border-border-main shadow-lg relative overflow-hidden;
+  }
+  .vintage-panel::before {
+    content: '';
+    @apply absolute inset-0 bg-leather-texture pointer-events-none mix-blend-overlay;
+  }
+  
+  .vintage-paper {
+    @apply bg-paper text-leather border border-gold/30 shadow-md relative overflow-hidden;
+  }
+  .vintage-paper::before {
+    content: '';
+    @apply absolute inset-0 bg-paper-texture pointer-events-none mix-blend-multiply opacity-50;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(245, 230, 200, 0.3);
+  }
+  
+  .glass-panel {
+    @apply bg-primary-bg/80 backdrop-blur-md border border-white/10;
+  }
+
+  .wax-seal {
+    @apply bg-crimson rounded-full shadow-[0_4px_10px_rgba(139,46,46,0.5)] border-2 border-red-950 flex items-center justify-center text-white font-cinzel font-bold relative;
+  }
+  .wax-seal::after {
+    content: '';
+    @apply absolute inset-1 border border-red-900 rounded-full opacity-50;
+  }
+}
