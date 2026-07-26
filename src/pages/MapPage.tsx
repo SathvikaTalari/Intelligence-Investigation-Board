@@ -389,13 +389,7 @@ export function MapPage() {
             </button>
           </div>
 
-          {/* Radar Mini Map (Bottom Right Overlay) */}
-          <div className="absolute bottom-4 right-4 z-30 w-44 h-28 rounded-sm border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md p-1.5 shadow-2xl flex flex-col">
-            <span className="font-mono text-[8px] text-[#8b7a5a] mb-1">RADAR MINI MAP</span>
-            <div className="flex-1 bg-black/40 border border-[#5a3b1c]/20 relative overflow-hidden">
-              <div className="absolute inset-2 border border-[#c89b3c]/60 rounded-xs" />
-            </div>
-          </div>
+
         </div>
 
         {/* ── RIGHT INSPECTOR PANEL: LOCATION DETAILS ── */}

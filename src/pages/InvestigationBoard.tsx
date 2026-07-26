@@ -321,7 +321,7 @@ function PushPin() {
 export function InvestigationBoard() {
   const [nodes, setNodes] = useState<BoardNode[]>(initialNodes);
   const [connections, setConnections] = useState<Connection[]>(initialConnections);
-  const [activeTool, setActiveTool] = useState<'pan' | 'select' | 'pin' | 'string' | 'box' | 'text' | 'location'>('pan');
+  const [activeTool, setActiveTool] = useState<'pan' | 'select' | 'pin' | 'string' | 'box' | 'text' | 'location'>('select');
   const [zoomLevel, setZoomLevel] = useState(100);
   const [addItemModalOpen, setAddItemModalOpen] = useState(false);
   const [newItemTitle, setNewItemTitle] = useState('');

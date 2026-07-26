@@ -158,86 +158,113 @@ export function DocumentsPage() {
   return (
     <div className="min-h-full p-6 pb-20 relative overflow-x-hidden font-inter select-none" style={{ background: 'linear-gradient(180deg, #14110f 0%, #0d0a08 100%)' }}>
       
-      {/* ── HEADER ── */}
-      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
-        <div>
-          <h1 className="font-playfair text-3xl text-[#f5e6c8] font-bold tracking-tight">DOCUMENTS</h1>
-          <p className="font-inter text-xs text-[#8b7a5a] mt-0.5">All case related documents and files.</p>
-        </div>
+      {/* Background Noise */}
+      <div
+        className="absolute inset-0 opacity-15 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize: '120px',
+        }}
+      />
 
-        <div className="flex items-center gap-4">
-          {/* Case Folder Tag */}
-          <div className="px-4 py-2 bg-[#d4b896] border border-[#5a3b1c] rounded-xs shadow-md flex items-center gap-2">
-            <span className="font-mono text-xs font-bold text-[#8b2e2e]">CASE #47-A7</span>
-            <span className="font-playfair text-xs font-bold text-[#2a1505]">The Blackwood Heist</span>
+      
+      {/* ── UNIFIED HEADER & TOOLBAR (Vintage Parchment Style) ── */}
+      <div 
+        className="max-w-[1440px] mx-auto mb-6 rounded-sm shadow-2xl relative overflow-hidden border border-[#5a3b1c]"
+        style={{
+          background: 'linear-gradient(160deg, #d4b896 0%, #c4a274 100%)',
+        }}
+      >
+        <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
+        
+        {/* Header Section */}
+        <div className="p-5 pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10 border-b border-[#5a3b1c]/30">
+          <div>
+            <h1 className="font-playfair text-3xl text-[#2a1505] font-extrabold tracking-tight">DOCUMENTS</h1>
+            <p className="font-inter text-xs text-[#5a3b1c] font-medium mt-0.5">All case related documents and files.</p>
           </div>
 
-          <button
-            onClick={() => setUploadModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#3d2612] text-[#e8d9b5] font-cinzel font-bold text-xs uppercase tracking-widest rounded-xs border border-[#5a3b1c] shadow-lg hover:bg-[#28180a] transition-colors"
-          >
-            <Plus className="w-4 h-4 text-[#c89b3c]" />
-            <span>+ Upload Document</span>
-          </button>
-        </div>
-      </div>
+          <div className="flex items-center gap-4">
+            {/* Case Folder Tag */}
+            <div className="px-4 py-2 bg-[#e8d9b5] border border-[#5a3b1c] shadow-inner flex items-center gap-2">
+              <span className="font-mono text-xs font-bold text-[#8b2e2e]">CASE #47-A7</span>
+              <span className="font-playfair text-xs font-bold text-[#2a1505]">The Blackwood Heist</span>
+            </div>
 
-      {/* ── TOP FILTER TOOLBAR ── */}
-      <div className="max-w-[1440px] mx-auto p-3 bg-[#1a1208] border border-[#5a3b1c]/30 rounded-sm flex flex-wrap items-center justify-between gap-3 shadow-md mb-5">
-        <div className="flex flex-wrap items-center gap-3">
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            className="bg-[#120b04] border border-[#5a3b1c]/40 text-[#c89b3c] text-xs p-2 rounded-xs font-medium focus:outline-none"
-          >
-            <option>All Document Types</option>
-            <option value="Report">Reports</option>
-            <option value="Log">Logs</option>
-            <option value="Statement">Statements</option>
-            <option value="Record">Records</option>
-            <option value="News">News</option>
-          </select>
-
-          <select className="bg-[#120b04] border border-[#5a3b1c]/40 text-[#c89b3c] text-xs p-2 rounded-xs font-medium focus:outline-none">
-            <option>All Sources</option>
-            <option>Museum Authority</option>
-            <option>Detective Arjun Rathore</option>
-            <option>Forensic Lab</option>
-          </select>
-
-          <select className="bg-[#120b04] border border-[#5a3b1c]/40 text-[#c89b3c] text-xs p-2 rounded-xs font-medium focus:outline-none">
-            <option>All Added By</option>
-            <option>Det. Arjun Rathore</option>
-            <option>Det. Meera Iyer</option>
-          </select>
-
-          <button className="flex items-center gap-1.5 px-3 py-2 bg-[#120b04] border border-[#5a3b1c]/40 text-xs text-[#8b7a5a] hover:text-[#c89b3c] rounded-xs">
-            <Calendar className="w-3.5 h-3.5" />
-            <span>Date Added</span>
-          </button>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {/* Grid / List Toggle */}
-          <div className="flex items-center gap-1 p-1 bg-[#120b04] border border-[#5a3b1c]/30 rounded-xs">
             <button
-              onClick={() => setViewMode('grid')}
-              className={cn("p-1.5 rounded-xs transition-colors", viewMode === 'grid' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+              onClick={() => setUploadModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-[#1a1208] text-[#c89b3c] font-cinzel font-bold text-xs uppercase tracking-widest border border-[#000] shadow-xl hover:bg-[#000] transition-colors"
             >
-              <Grid className="w-4 h-4" />
+              <Plus className="w-4 h-4" />
+              <span>Upload Document</span>
             </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={cn("p-1.5 rounded-xs transition-colors", viewMode === 'list' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+          </div>
+        </div>
+
+        {/* Filter Toolbar Section */}
+        <div className="p-3 px-5 flex flex-wrap items-center justify-between gap-3 relative z-10 bg-[#1a1208] border-t border-[#3d2612] shadow-inner">
+          <div className="flex flex-wrap items-center gap-3">
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              className="bg-transparent text-[#c89b3c] text-xs font-medium focus:outline-none cursor-pointer hover:text-white"
             >
-              <List className="w-4 h-4" />
+              <option className="bg-[#1a1208]">All Document Types</option>
+              <option className="bg-[#1a1208]" value="Report">Reports</option>
+              <option className="bg-[#1a1208]" value="Log">Logs</option>
+              <option className="bg-[#1a1208]" value="Statement">Statements</option>
+              <option className="bg-[#1a1208]" value="Record">Records</option>
+              <option className="bg-[#1a1208]" value="News">News</option>
+            </select>
+            <span className="text-[#5a3b1c]">|</span>
+
+            <select className="bg-transparent text-[#c89b3c] text-xs font-medium focus:outline-none cursor-pointer hover:text-white">
+              <option className="bg-[#1a1208]">All Sources</option>
+              <option className="bg-[#1a1208]">Museum Authority</option>
+              <option className="bg-[#1a1208]">Detective Arjun Rathore</option>
+              <option className="bg-[#1a1208]">Forensic Lab</option>
+            </select>
+            <span className="text-[#5a3b1c]">|</span>
+
+            <select className="bg-transparent text-[#c89b3c] text-xs font-medium focus:outline-none cursor-pointer hover:text-white">
+              <option className="bg-[#1a1208]">All Added By</option>
+              <option className="bg-[#1a1208]">Det. Arjun Rathore</option>
+              <option className="bg-[#1a1208]">Det. Meera Iyer</option>
+            </select>
+            <span className="text-[#5a3b1c]">|</span>
+
+            <button className="flex items-center gap-1.5 text-xs text-[#c89b3c] hover:text-white transition-colors">
+              <span>Date Added</span>
+              <Calendar className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <select className="bg-[#120b04] border border-[#5a3b1c]/40 text-[#8b7a5a] text-xs p-2 rounded-xs font-medium focus:outline-none">
-            <option>Sort by: Date Added</option>
-            <option>Sort by: Title</option>
-          </select>
+          <div className="flex items-center gap-4">
+            {/* Grid / List Toggle */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={cn("transition-colors", viewMode === 'grid' ? "text-[#c89b3c]" : "text-[#5a3b1c] hover:text-[#c89b3c]")}
+              >
+                <Grid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={cn("transition-colors", viewMode === 'list' ? "text-[#c89b3c]" : "text-[#5a3b1c] hover:text-[#c89b3c]")}
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+            <span className="text-[#5a3b1c]">|</span>
+
+            <select className="bg-transparent text-[#c89b3c] text-xs font-medium focus:outline-none cursor-pointer hover:text-white">
+              <option className="bg-[#1a1208]">Sort by: Date Added</option>
+              <option className="bg-[#1a1208]">Sort by: Title</option>
+            </select>
+            <button className="text-[#c89b3c] hover:text-white">
+              <Filter className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -245,58 +272,55 @@ export function DocumentsPage() {
       <div className="max-w-[1440px] mx-auto">
         <div className={cn(
           viewMode === 'grid'
-            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
-            : "space-y-3"
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+            : "space-y-4"
         )}>
-          {filteredDocuments.map((doc) => (
+          {filteredDocuments.map((doc, idx) => (
             <motion.div
               key={doc.id}
-              whileHover={{ scale: 1.02, y: -3 }}
+              whileHover={{ scale: 1.05, zIndex: 10 }}
               onClick={() => setSelectedDoc(doc)}
               className={cn(
-                "p-3 rounded-xs border shadow-2xl relative cursor-pointer transition-all overflow-hidden flex flex-col justify-between",
-                viewMode === 'list' ? "flex-row items-center p-4" : ""
+                "p-4 rounded-sm shadow-2xl relative cursor-pointer transition-all overflow-hidden flex flex-col justify-between",
+                viewMode === 'list' ? "flex-row items-center gap-4" : ""
               )}
               style={{
                 background: 'linear-gradient(150deg, #e8d9b5 0%, #dfcea3 50%, #d4c090 100%)',
-                borderColor: '#5a3b1c',
+                border: '1px solid rgba(90,59,28,0.4)',
+                transform: viewMode === 'grid' ? `rotate(${idx % 2 === 0 ? 0.5 : -1}deg)` : 'none',
               }}
             >
+              {/* Noise Texture for Vintage Paper Feel */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
+
               {/* Red Pushpin at Top Center */}
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#8b2e2e] border-2 border-[#3a0808] shadow-md z-10" />
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#8b2e2e] border-2 border-[#3a0808] shadow-[0_4px_6px_rgba(0,0,0,0.6)] z-10">
+                <div className="w-1.5 h-1.5 bg-white/30 rounded-full absolute top-0.5 left-0.5" />
+              </div>
 
-              <div>
-                {/* Header Icon + Title */}
-                <div className="flex justify-between items-start mb-2">
-                  <div className="w-6 h-6 rounded-xs bg-[#5a3b1c]/20 border border-[#5a3b1c]/40 flex items-center justify-center text-[#5a3b1c]">
-                    <doc.icon className="w-3.5 h-3.5" />
-                  </div>
-                  <button className="text-[#5a3b1c]/60 hover:text-[#2a1505]">
-                    <MoreHorizontal className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Thumbnail Photo / Graphic */}
-                <div className="w-full h-32 bg-[#1a0f05] rounded-xs overflow-hidden border border-[#5a3b1c]/30 mb-2.5 relative">
-                  <img src={doc.image} alt={doc.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+              <div className="relative z-10 flex-1 flex flex-col">
+                {/* Thumbnail Photo / Graphic Centered */}
+                <div className="w-full h-36 bg-[#1a0f05] rounded-xs overflow-hidden border border-[#5a3b1c]/30 mb-3 relative flex items-center justify-center p-2 shadow-inner z-10">
+                  <img src={doc.image} alt={doc.title} className="max-w-full max-h-full object-contain" />
                 </div>
 
                 {/* Title & Metadata */}
-                <h3 className="font-playfair text-xs font-extrabold text-[#2a1505] truncate mb-1">{doc.title}</h3>
+                <h3 className="font-playfair text-[13px] font-extrabold text-[#2a1505] truncate mb-1">{doc.title}</h3>
                 <p className="font-inter text-[10px] text-[#5a3b1c]"><span className="font-bold">Type:</span> {doc.type}</p>
                 <p className="font-inter text-[10px] text-[#5a3b1c] truncate"><span className="font-bold">Source:</span> {doc.source}</p>
-                <p className="font-mono text-[9px] text-[#5a3b1c]/70 mb-3"><span className="font-bold">Added:</span> {doc.addedDate}</p>
+                <p className="font-mono text-[9px] text-[#5a3b1c]/70 mb-3 mt-0.5"><span className="font-bold">Added:</span> {doc.addedDate}</p>
               </div>
 
               {/* Bottom File Badge Tag */}
-              <div className="flex justify-between items-center border-t border-[#5a3b1c]/20 pt-2">
+              <div className="flex justify-between items-center pt-2 relative z-10 mt-auto">
                 <div className={cn(
-                  "border px-2 py-0.5 text-[8px] font-mono font-extrabold rounded-xs uppercase",
-                  doc.badgeColor
+                  "border px-2 py-0.5 text-[9px] font-mono font-extrabold border-[#8b2e2e] text-[#8b2e2e] bg-transparent uppercase"
                 )}>
                   {doc.badge}
                 </div>
-                <span className="font-mono text-[10px] text-[#5a3b1c]/60">•••</span>
+                <button className="text-[#5a3b1c] hover:text-[#2a1505] transition-colors">
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
               </div>
             </motion.div>
           ))}
@@ -333,12 +357,23 @@ export function DocumentsPage() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-2xl p-6 rounded-sm border shadow-2xl relative overflow-hidden"
+              className="w-full max-w-3xl p-8 rounded-sm shadow-2xl relative overflow-hidden"
               style={{
-                background: 'linear-gradient(160deg, #e8d9b5 0%, #dfcea3 50%, #d4c090 100%)',
-                borderColor: '#5a3b1c',
+                background: 'linear-gradient(160deg, #d4b896 0%, #c4a274 100%)',
+                border: '1px solid #5a3b1c',
               }}
             >
+              {/* Top Manila Folder Tab */}
+              <div className="absolute top-0 left-0 w-48 h-8 bg-[#c4a274] border-b border-r border-[#5a3b1c] rounded-br-lg shadow-inner flex items-center justify-center">
+                <span className="font-mono text-[10px] font-extrabold text-[#5a3b1c] tracking-widest">DOCUMENT RECORD</span>
+              </div>
+              
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+              />
               <button
                 onClick={() => setSelectedDoc(null)}
                 className="absolute top-4 right-4 text-[#5a3b1c] hover:text-black"
@@ -351,7 +386,7 @@ export function DocumentsPage() {
                 <div className="w-full md:w-1/2">
                   <div className="p-2 bg-[#f5e6c8] border border-gray-300 shadow-xl rounded-xs">
                     <div className="w-full h-56 bg-[#1a0f05] overflow-hidden mb-2">
-                      <img src={selectedDoc.image} alt={selectedDoc.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+                      <img src={selectedDoc.image} alt={selectedDoc.title} className="w-full h-full object-cover" />
                     </div>
                     <p className="font-playfair text-sm font-extrabold text-[#2a1505] text-center">{selectedDoc.title}</p>
                   </div>

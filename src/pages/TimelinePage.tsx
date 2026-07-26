@@ -20,7 +20,7 @@ interface TimelineEventItem {
   location?: string;
   reportedBy?: string;
   value?: string;
-  nodeColor: 'green' | 'gold' | 'red';
+  nodeColor: 'green' | 'gold' | 'red' | 'blue';
 }
 
 const timelineEvents: TimelineEventItem[] = [
@@ -91,7 +91,7 @@ const timelineEvents: TimelineEventItem[] = [
     stamp: { text: 'POSSIBLE CLUE', color: 'blue' },
     location: 'Loading Dock Alley',
     reportedBy: 'Patrol Officer',
-    nodeColor: 'gold',
+    nodeColor: 'blue',
   },
   {
     id: 'evt-6',
@@ -227,8 +227,8 @@ export function TimelinePage() {
               }}
             />
 
-            {/* Central Vertical Brass Timeline Line */}
-            <div className="absolute left-[200px] top-8 bottom-8 w-1 bg-gradient-to-b from-[#8b6a20] via-[#c89b3c] to-[#5a3b1c] shadow-[0_0_8px_rgba(200,155,60,0.4)]" />
+            {/* Central Vertical Red String Timeline Line */}
+            <div className="absolute left-[200px] top-8 bottom-8 w-1.5 bg-[#8b2e2e] border-l border-r border-[#4a1212] shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-0" />
 
             {/* List of Events */}
             <div className="space-y-6 relative z-10">
@@ -268,12 +268,14 @@ export function TimelinePage() {
                         "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-transform group-hover:scale-125 shadow-lg",
                         evt.nodeColor === 'green' ? "bg-emerald-950 border-emerald-500" :
                         evt.nodeColor === 'red' ? "bg-red-950 border-red-500" :
+                        evt.nodeColor === 'blue' ? "bg-blue-950 border-blue-500" :
                         "bg-[#3a2810] border-[#c89b3c]"
                       )}>
                         <div className={cn(
                           "w-2.5 h-2.5 rounded-full",
                           evt.nodeColor === 'green' ? "bg-emerald-400" :
                           evt.nodeColor === 'red' ? "bg-red-500" :
+                          evt.nodeColor === 'blue' ? "bg-blue-400" :
                           "bg-[#c89b3c]"
                         )} />
                       </div>
@@ -281,22 +283,26 @@ export function TimelinePage() {
 
                     {/* 3. Right Aged Paper Event Card */}
                     <motion.div
-                      whileHover={{ scale: 1.01, x: 4 }}
+                      whileHover={{ scale: 1.02, x: 4 }}
                       className={cn(
-                        "flex-1 p-4 rounded-xs shadow-2xl border relative flex items-center gap-5 transition-all overflow-hidden",
-                        isSelected ? "ring-2 ring-[#c89b3c]" : ""
+                        "flex-1 p-5 rounded-sm shadow-2xl border relative flex items-center gap-5 transition-all overflow-hidden",
+                        isSelected ? "ring-2 ring-[#8b2e2e]" : ""
                       )}
                       style={{
                         background: 'linear-gradient(150deg, #e8d9b5 0%, #dfcea3 50%, #d4c090 100%)',
-                        borderColor: '#5a3b1c',
+                        border: '1px solid rgba(90,59,28,0.4)',
+                        transform: `rotate(${Math.random() * 2 - 1}deg)`,
                       }}
                     >
+                      {/* Torn edge effect top/bottom via noise */}
+                      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
+
                       {/* Paper Clip at Top Right */}
                       <Paperclip className="absolute top-2 right-3 w-5 h-5 text-[#5a3b1c]/60 transform rotate-45 pointer-events-none" />
 
                       {/* Photo on Left of Card */}
                       <div className="w-28 h-24 rounded-xs border border-[#5a3b1c]/30 overflow-hidden flex-shrink-0 bg-black/20">
-                        <img src={evt.image} alt={evt.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+                        <img src={evt.image} alt={evt.title} className="w-full h-full object-cover" />
                       </div>
 
                       {/* Content on Right of Card */}
@@ -424,7 +430,7 @@ export function TimelinePage() {
               {/* Event Polaroid Photo */}
               <div className="p-2 pb-4 bg-[#f5e6c8] border border-gray-300 shadow-md rounded-xs mb-3">
                 <div className="w-full h-36 bg-[#1a0f05] overflow-hidden mb-2">
-                  <img src={selectedEvt.image} alt={selectedEvt.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+                  <img src={selectedEvt.image} alt={selectedEvt.title} className="w-full h-full object-cover" />
                 </div>
               </div>
 

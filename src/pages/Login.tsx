@@ -36,9 +36,9 @@ export function Login() {
       <div className="absolute inset-0 z-0 bg-[#0c0804]">
         {/* Background image asset */}
         <img
-          src="/detective_bg.png"
+          src="/login_bg.png"
           alt="Detective Office Desk"
-          className="w-full h-full object-cover object-center filter brightness-[0.9] contrast-[1.1] sepia-[0.2]"
+          className="w-full h-full object-cover object-center filter brightness-[0.8] contrast-[1.2]"
         />
 
         {/* Ambient lighting overlays for depth */}
@@ -180,13 +180,12 @@ export function Login() {
 
             {/* === FORM INPUTS === */}
             <form onSubmit={handleLogin} className="relative z-10 space-y-3.5">
-              {/* Detective ID / Email */}
               <div
-                className="flex items-center gap-3 px-3.5 py-2.5 rounded-sm border transition-all"
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-sm transition-all"
                 style={{
-                  background: 'rgba(60,35,14,0.07)',
-                  borderColor: 'rgba(90,59,28,0.5)',
-                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.15)',
+                  background: 'rgba(0,0,0,0.06)',
+                  border: '1px solid rgba(90,59,28,0.4)',
+                  boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)',
                 }}
               >
                 <User className="w-4 h-4 text-[#5a3b1c] flex-shrink-0" />
@@ -200,11 +199,11 @@ export function Login() {
 
               {/* Password Input */}
               <div
-                className="flex items-center gap-3 px-3.5 py-2.5 rounded-sm border transition-all"
+                className="flex items-center gap-3 px-3.5 py-2.5 rounded-sm transition-all"
                 style={{
-                  background: 'rgba(60,35,14,0.07)',
-                  borderColor: 'rgba(90,59,28,0.5)',
-                  boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.15)',
+                  background: 'rgba(0,0,0,0.06)',
+                  border: '1px solid rgba(90,59,28,0.4)',
+                  boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)',
                 }}
               >
                 <Lock className="w-4 h-4 text-[#5a3b1c] flex-shrink-0" />
@@ -252,9 +251,9 @@ export function Login() {
                   disabled={sealBroken}
                   className="w-full py-3.5 px-6 rounded-sm font-cinzel font-bold tracking-[0.25em] text-[#e8d9b5] text-xs uppercase flex items-center justify-center relative overflow-hidden transition-transform active:scale-[0.99]"
                   style={{
-                    background: 'linear-gradient(180deg, #3d2612 0%, #261608 50%, #3a220f 100%)',
-                    border: '1px solid #5a3b1c',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15)',
+                    background: 'linear-gradient(180deg, #2a1505 0%, #1a0a02 100%)',
+                    border: '1px solid #110500',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.15), inset 0 0 0 1px rgba(90,59,28,0.3)',
                   }}
                 >
                   <span className="pr-6">ACCESS ARCHIVE</span>
@@ -290,9 +289,18 @@ export function Login() {
                     {/* Inner Gold Ring */}
                     <div className="absolute inset-1.5 rounded-full border border-[#c89b3c]/60" />
                     {/* Wax Seal DB Crest */}
-                    <span className="font-cinzel text-[#f5e6c8] text-xs font-extrabold z-10 relative drop-shadow">
-                      DB
-                    </span>
+                    <div className="absolute inset-0 flex items-center justify-center z-10 p-[14px]">
+                      <svg viewBox="0 0 60 70" className="w-full h-full opacity-90 drop-shadow-sm">
+                        <path
+                          d="M30 6 L49 13 L49 42 C49 53 30 62 30 62 C30 62 11 53 11 42 L11 13 Z"
+                          fill="none"
+                          stroke="#7a1212"
+                          strokeWidth="2"
+                        />
+                        <path d="M30 16 L34 22 L40 20 L36 26 L42 30 L34 31 L30 38 L26 31 L18 30 L24 26 L20 20 L26 22 Z" fill="#7a1212" />
+                        <circle cx="30" cy="46" r="4" fill="#7a1212" />
+                      </svg>
+                    </div>
                     {/* Wax Melt Drips */}
                     <div className="absolute -bottom-1.5 left-3 w-2 h-3 rounded-full bg-[#8b1818]" style={{ transform: 'rotate(-10deg)' }} />
                     <div className="absolute -bottom-1 right-4 w-1.5 h-2 rounded-full bg-[#7a1212]" />

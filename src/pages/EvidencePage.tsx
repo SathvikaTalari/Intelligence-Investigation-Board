@@ -147,6 +147,15 @@ export function EvidencePage() {
   return (
     <div className="min-h-full p-6 pb-20 relative overflow-x-hidden font-inter select-none" style={{ background: 'linear-gradient(180deg, #14110f 0%, #0d0a08 100%)' }}>
       
+      {/* Background Noise */}
+      <div
+        className="absolute inset-0 opacity-15 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize: '120px',
+        }}
+      />
+      
       {/* ── HEADER ── */}
       <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
         <div>
@@ -235,25 +244,26 @@ export function EvidencePage() {
       <div className="max-w-[1440px] mx-auto">
         <div className={cn(
           viewMode === 'grid'
-            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
-            : "space-y-3"
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+            : "space-y-4"
         )}>
-          {filteredEvidence.map((evd) => (
+          {filteredEvidence.map((evd, idx) => (
             <motion.div
               key={evd.id}
-              whileHover={{ scale: 1.02, y: -3 }}
+              whileHover={{ scale: 1.05, zIndex: 10 }}
               onClick={() => setSelectedEvd(evd)}
               className={cn(
-                "p-3 rounded-sm border shadow-vintage-soft relative cursor-pointer transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col justify-between",
-                viewMode === 'list' ? "flex-row items-center p-4" : ""
+                "p-3 pb-5 rounded-sm shadow-2xl relative cursor-pointer transition-all duration-300",
+                viewMode === 'list' ? "flex flex-row items-center p-4 gap-4" : "flex flex-col justify-between"
               )}
               style={{
                 background: 'linear-gradient(150deg, #e8d9b5 0%, #dfcea3 50%, #d4c090 100%)',
-                borderColor: '#5a3b1c',
+                border: '1px solid rgba(90,59,28,0.4)',
+                transform: viewMode === 'grid' ? `rotate(${idx % 2 === 0 ? 1 : -1.5}deg)` : 'none',
               }}
             >
-              {/* Red Pushpin at Top Center */}
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#8b2e2e] border-2 border-[#3a0808] shadow-md z-10" />
+              {/* Tape Graphic */}
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-12 h-5 bg-[#e8e0c8] opacity-80 shadow-sm border border-[#000]/10 transform -rotate-2 pointer-events-none z-10" />
 
               <div>
                 {/* Header Icon + Title */}
@@ -268,7 +278,7 @@ export function EvidencePage() {
 
                 {/* Thumbnail Photo / Graphic */}
                 <div className="w-full h-32 bg-[#1a0f05] rounded-xs overflow-hidden border border-[#5a3b1c]/30 mb-2.5 relative">
-                  <img src={evd.image} alt={evd.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+                  <img src={evd.image} alt={evd.title} className="w-full h-full object-cover" />
                 </div>
 
                 {/* Title & Metadata */}
@@ -312,12 +322,23 @@ export function EvidencePage() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-2xl p-6 rounded-sm border shadow-2xl relative overflow-hidden"
+              className="w-full max-w-3xl p-8 rounded-sm shadow-2xl relative overflow-hidden"
               style={{
-                background: 'linear-gradient(160deg, #e8d9b5 0%, #dfcea3 50%, #d4c090 100%)',
-                borderColor: '#5a3b1c',
+                background: 'linear-gradient(160deg, #d4b896 0%, #c4a274 100%)',
+                border: '1px solid #5a3b1c',
               }}
             >
+              {/* Top Manila Folder Tab */}
+              <div className="absolute top-0 left-0 w-48 h-8 bg-[#c4a274] border-b border-r border-[#5a3b1c] rounded-br-lg shadow-inner flex items-center justify-center">
+                <span className="font-mono text-[10px] font-extrabold text-[#5a3b1c] tracking-widest">EVIDENCE RECORD</span>
+              </div>
+              
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none mix-blend-multiply"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+              />
               <button
                 onClick={() => setSelectedEvd(null)}
                 className="absolute top-4 right-4 text-[#5a3b1c] hover:text-black"
@@ -330,7 +351,7 @@ export function EvidencePage() {
                 <div className="w-full md:w-1/2">
                   <div className="p-2 bg-[#f5e6c8] border border-gray-300 shadow-xl rounded-xs">
                     <div className="w-full h-56 bg-[#1a0f05] overflow-hidden mb-2">
-                      <img src={selectedEvd.image} alt={selectedEvd.title} className="w-full h-full object-cover grayscale contrast-125 sepia-[0.3]" />
+                      <img src={selectedEvd.image} alt={selectedEvd.title} className="w-full h-full object-cover" />
                     </div>
                     <p className="font-playfair text-sm font-extrabold text-[#2a1505] text-center">{selectedEvd.title}</p>
                   </div>
