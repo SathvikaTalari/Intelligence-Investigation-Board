@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    /* Responsive typography scaling */
+    font-size: 14px;
+  }
+  @screen sm {
+    html { font-size: 15px; }
+  }
+  @screen lg {
+    html { font-size: 16px; }
+  }
+
   body {
     @apply bg-primary-bg text-txt-main font-inter;
     margin: 0;
@@ -14,8 +25,8 @@
   
   /* Refined Vintage scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     @apply bg-primary-bg;
@@ -30,7 +41,7 @@
 
 @layer utilities {
   .vintage-panel {
-    @apply bg-card-bg border border-[#3d2612] shadow-vintage-soft relative overflow-hidden rounded-sm;
+    @apply bg-card-bg border border-[#3d2612] shadow-vintage-soft relative overflow-hidden rounded-sm transition-all duration-300;
   }
   .vintage-panel::before {
     content: '';
@@ -38,7 +49,7 @@
   }
   
   .vintage-paper {
-    @apply bg-paper text-leather border border-[#8b6a20]/20 shadow-vintage-soft relative overflow-hidden rounded-sm;
+    @apply bg-paper text-leather border border-[#8b6a20]/20 shadow-vintage-soft relative overflow-hidden rounded-sm transition-all duration-300;
   }
   .vintage-paper::before {
     content: '';
@@ -50,14 +61,27 @@
   }
   
   .glass-panel {
-    @apply bg-primary-bg/75 backdrop-blur-xl border border-white/5 shadow-vintage-soft;
+    @apply bg-primary-bg/75 backdrop-blur-md border border-white/5 shadow-vintage-soft;
+  }
+
+  .glass-panel-deep {
+    @apply bg-black/60 backdrop-blur-xl border border-[#5a3b1c]/40 shadow-vintage-deep;
   }
 
   .wax-seal {
-    @apply bg-[#8b2e2e] rounded-full shadow-[0_6px_14px_rgba(139,46,46,0.6)] border border-[#521111] flex items-center justify-center text-white font-cinzel font-bold relative;
+    @apply bg-gradient-to-tr from-[#6b1414] via-[#8b2e2e] to-[#a33a3a] rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.5)] border border-[#4a0808] flex items-center justify-center text-white font-cinzel font-bold relative;
   }
   .wax-seal::after {
     content: '';
-    @apply absolute inset-[2px] border border-[#a13f3f]/50 rounded-full opacity-70;
+    @apply absolute inset-[2px] border border-[#ff8c8c]/30 rounded-full opacity-70;
   }
+
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
 }

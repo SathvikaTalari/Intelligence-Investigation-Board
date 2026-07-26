@@ -90,10 +90,13 @@ const navItems = [
   },
 ];
 
-export function Sidebar() {
+export function Sidebar({ mobileOpen, setMobileOpen }: { mobileOpen: boolean; setMobileOpen: (open: boolean) => void }) {
   return (
     <aside
-      className="w-[200px] h-screen flex flex-col relative z-20 flex-shrink-0"
+      className={cn(
+        "w-[240px] md:w-[200px] h-screen flex flex-col fixed md:relative z-50 flex-shrink-0 transition-transform duration-300 ease-in-out",
+        mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}
       style={{
         background: 'linear-gradient(180deg, #1a1208 0%, #150f08 50%, #120d06 100%)',
         borderRight: '1px solid rgba(90,59,28,0.3)',
@@ -151,11 +154,12 @@ export function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={() => setMobileOpen(false)}
             className={({ isActive }) => cn(
-              'flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-200 relative group',
+              'flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-300 relative group overflow-hidden',
               isActive
                 ? 'text-[#c89b3c]'
-                : 'text-[#8b7a5a] hover:text-[#c89b3c]'
+                : 'text-[#8b7a5a] hover:text-[#c89b3c] hover:bg-[#c89b3c]/5'
             )}
           >
             {({ isActive }) => (
@@ -190,7 +194,8 @@ export function Sidebar() {
         {/* Notifications */}
         <NavLink
           to="/notifications"
-          className={({ isActive }) => cn('flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-200', isActive ? 'text-[#c89b3c]' : 'text-[#8b7a5a] hover:text-[#c89b3c]')}
+          onClick={() => setMobileOpen(false)}
+          className={({ isActive }) => cn('flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-300 hover:bg-[#c89b3c]/5', isActive ? 'text-[#c89b3c]' : 'text-[#8b7a5a] hover:text-[#c89b3c]')}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 flex-shrink-0 text-[#5a4a2c]">
             <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
@@ -204,7 +209,8 @@ export function Sidebar() {
         {/* Settings */}
         <NavLink
           to="/settings"
-          className={({ isActive }) => cn('flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-200', isActive ? 'text-[#c89b3c]' : 'text-[#8b7a5a] hover:text-[#c89b3c]')}
+          onClick={() => setMobileOpen(false)}
+          className={({ isActive }) => cn('flex items-center gap-3 px-4 py-2.5 text-sm font-inter transition-all duration-300 hover:bg-[#c89b3c]/5', isActive ? 'text-[#c89b3c]' : 'text-[#8b7a5a] hover:text-[#c89b3c]')}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 flex-shrink-0 text-[#5a4a2c]">
             <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>

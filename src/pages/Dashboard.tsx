@@ -5,6 +5,21 @@ import { Search, Bell, Folder, Eye, X, Filter, ChevronRight, MapPin, User, FileT
 import { cn } from '../lib/utils';
 import type { Case } from '../types';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
+
 // ─── STYLES & TEXTURES ────────────────────────────────────────────────────────
 
 const paperTextureStyle = {
@@ -78,6 +93,7 @@ function StatFolderCard({
 
   return (
     <motion.div
+      variants={itemVariants}
       whileHover={{ y: -4, scale: 1.02 }}
       onClick={onClick}
       className="relative overflow-hidden rounded-sm cursor-pointer group shadow-vintage-soft"
@@ -271,11 +287,16 @@ export function Dashboard() {
 
   return (
     <div
-      className="min-h-full p-6 pb-20 relative overflow-x-hidden font-inter"
+      className="min-h-full p-4 md:p-6 pb-20 relative overflow-x-hidden font-inter"
       style={{ background: 'linear-gradient(180deg, #14110f 0%, #0d0a08 100%)' }}
     >
       {/* Search Keyboard Shortcut Listener */}
-      <div className="max-w-[1440px] mx-auto space-y-5 relative z-10">
+      <motion.div 
+        variants={containerVariants} 
+        initial="hidden" 
+        animate="show"
+        className="max-w-[1440px] mx-auto space-y-5 md:space-y-6 relative z-10"
+      >
 
         {/* ── PAGE HEADER ── */}
         <div className="flex justify-between items-start">
@@ -286,7 +307,7 @@ export function Dashboard() {
         </div>
 
         {/* ── 6 TOP STAT FILE FOLDERS ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
+        <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 md:gap-4">
           <StatFolderCard
             title="Open Cases"
             count={24}
@@ -327,13 +348,13 @@ export function Dashboard() {
             stamp={{ text: 'PENDING', type: 'amber' }}
             icon={<ShieldAlert className="w-8 h-8" />}
           />
-        </div>
+        </motion.div>
 
         {/* ── MIDDLE ROW: 4 MAIN CHARTS / PANELS ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
 
           {/* 1. CASE OVERVIEW */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Case Overview
             </p>
@@ -341,7 +362,7 @@ export function Dashboard() {
           </div>
 
           {/* 2. CASE STATUS */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Case Status
             </p>
@@ -349,7 +370,7 @@ export function Dashboard() {
           </div>
 
           {/* 3. EVIDENCE CATEGORIES */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-3">
               Evidence Categories
             </p>
@@ -380,7 +401,7 @@ export function Dashboard() {
           </div>
 
           {/* 4. PRIORITY CASES (Aged Paper Folder Document) */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1" style={paperTextureStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1 vintage-paper">
             <FinePaperNoise />
             {/* Red Pushpin at Top */}
             <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#8b2e2e] border-2 border-[#3a0808] shadow-md z-20" />
@@ -422,13 +443,13 @@ export function Dashboard() {
             </div>
           </div>
 
-        </div>
+        </motion.div>
 
         {/* ── BOTTOM ROW: 4 PANELS ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
 
           {/* 1. RECENT ACTIVITY */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-2 h-2 rounded-full bg-[#8b2e2e] animate-ping" />
               <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a]">
@@ -456,7 +477,7 @@ export function Dashboard() {
           </div>
 
           {/* 2. CASE HEAT MAP */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-3">
               Case Heat Map
             </p>
@@ -491,7 +512,7 @@ export function Dashboard() {
           </div>
 
           {/* 3. INVESTIGATOR PERFORMANCE */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1" style={cardDarkStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-deep transition-all duration-300 hover:-translate-y-1 glass-panel-deep">
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#8b7a5a] mb-2">
               Investigator Performance
             </p>
@@ -527,7 +548,7 @@ export function Dashboard() {
           </div>
 
           {/* 4. TASK OVERVIEW (Aged Paper Card) */}
-          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1" style={paperTextureStyle}>
+          <div className="relative overflow-hidden p-4 rounded-sm shadow-vintage-soft transition-all duration-300 hover:-translate-y-1 vintage-paper">
             <FinePaperNoise />
             <p className="font-inter text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#4a2e14] mb-3">
               Task Overview
@@ -567,9 +588,9 @@ export function Dashboard() {
             </div>
           </div>
 
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
       {/* === DESK METAPHOR BOTTOM PROPS === */}
       <div className="mt-8 pt-6 border-t border-[#5a3b1c]/20 flex flex-wrap items-center justify-center gap-12 opacity-80 pointer-events-none select-none">

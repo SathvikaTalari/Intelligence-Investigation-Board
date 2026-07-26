@@ -548,15 +548,16 @@ export function InvestigationBoard() {
           </svg>
 
           {/* ── DRAGGABLE CORKBOARD NODES ── */}
-          {nodes.map((node) => (
+          {nodes.map((node, idx) => (
             <motion.div
               key={node.id}
               drag
               dragMomentum={false}
               dragElastic={0.05}
               onDrag={(_, info) => handleDrag(node.id, info)}
-              initial={{ x: node.x, y: node.y, rotate: node.rotate }}
-              animate={{ x: node.x, y: node.y, rotate: node.rotate }}
+              initial={{ opacity: 0, scale: 0.8, x: node.x, y: node.y, rotate: node.rotate - 10 }}
+              animate={{ opacity: 1, scale: 1, x: node.x, y: node.y, rotate: node.rotate }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24, delay: idx * 0.05 }}
               whileHover={{ scale: 1.04, zIndex: 50 }}
               whileDrag={{ scale: 1.08, zIndex: 100 }}
               className="absolute z-20 cursor-grab active:cursor-grabbing origin-top-left group"
@@ -678,7 +679,7 @@ export function InvestigationBoard() {
           ))}
 
           {/* Floating Bottom-Left Radar Mini Map */}
-          <div className="absolute bottom-4 left-6 z-30 w-44 h-28 rounded-md border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md p-2 shadow-2xl flex flex-col justify-between">
+          <div className="absolute bottom-4 left-6 z-30 w-44 h-28 hidden sm:flex rounded-md border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md p-2 shadow-2xl flex-col justify-between">
             <div className="flex justify-between items-center text-[9px] font-mono text-[#8b7a5a]">
               <span>CORKBOARD RADAR</span>
               <span className="text-[#c89b3c]">17 NODES</span>
@@ -700,7 +701,7 @@ export function InvestigationBoard() {
 
         {/* ── RIGHT FLOATING INSPECTOR PANEL ── */}
         <div
-          className="w-80 h-full flex flex-col z-20 flex-shrink-0 p-4 space-y-4 overflow-y-auto"
+          className="w-80 h-full hidden lg:flex flex-col z-20 flex-shrink-0 p-4 space-y-4 overflow-y-auto"
           style={{
             background: 'linear-gradient(180deg, #181108 0%, #120b04 100%)',
             borderLeft: '1px solid rgba(90,59,28,0.4)',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Bell, Folder, ChevronDown, X, ArrowRight, FileText, Camera, Fingerprint, MapPin } from 'lucide-react';
+import { Search, Bell, Folder, ChevronDown, X, ArrowRight, FileText, Camera, Fingerprint, MapPin, Menu } from 'lucide-react';
 
 const searchDatabase = [
   { title: 'The Blackwood Heist', category: 'Case', path: '/board', code: '#47-A7' },
@@ -17,7 +17,7 @@ const searchDatabase = [
   { title: 'Blackwood City Parchment Map', category: 'Map', path: '/maps', code: 'MAP-01' },
 ];
 
-export function TopBar() {
+export function TopBar({ setMobileMenuOpen }: { setMobileMenuOpen: (open: boolean) => void }) {
   const navigate = useNavigate();
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -58,8 +58,15 @@ export function TopBar() {
         }}
       />
 
-      {/* LEFT: Page title area */}
-      <div className="relative z-10" />
+      {/* LEFT: Mobile Menu Toggle & Page title area */}
+      <div className="relative z-10 flex items-center">
+        <button 
+          onClick={() => setMobileMenuOpen(true)}
+          className="md:hidden mr-4 p-1 text-[#8b7a5a] hover:text-[#c89b3c]"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      </div>
 
       {/* CENTER: Quote sticky note */}
       <div
@@ -92,14 +99,14 @@ export function TopBar() {
           <input
             type="text"
             readOnly
-            placeholder="Search cases, evidence, persons..."
-            className="pl-9 pr-14 py-2 text-xs font-inter text-[#c89b3c] placeholder-[#5a4a2c] focus:outline-none w-60 cursor-pointer"
+            placeholder="Search cases, evidence..."
+            className="pl-9 pr-14 py-2 text-xs font-inter text-[#c89b3c] placeholder-[#5a4a2c] focus:outline-none w-40 md:w-60 cursor-pointer"
             style={{
               background: 'rgba(0,0,0,0.3)',
               border: '1px solid rgba(90,59,28,0.4)',
             }}
           />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-[#5a4a2c]">Ctrl / K</span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-mono text-[#5a4a2c] hidden md:block">Ctrl / K</span>
         </div>
 
         {/* Bell Button */}
