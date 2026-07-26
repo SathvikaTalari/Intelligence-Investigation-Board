@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { useInvestigationStore } from '../store/useInvestigationStore';
 import { Search, Bell, Folder, Eye, X, Filter, ChevronRight, MapPin, User, FileText, CheckCircle2, ShieldAlert } from 'lucide-react';
 import { TypewriterText } from '../components/ui/TypewriterText';
@@ -7,7 +8,7 @@ import { RedactedText } from '../components/ui/RedactedText';
 import { cn } from '../lib/utils';
 import type { Case } from '../types';
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -17,7 +18,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
 };

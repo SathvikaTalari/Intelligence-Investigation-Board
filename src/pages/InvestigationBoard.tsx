@@ -525,74 +525,84 @@ export function InvestigationBoard() {
       <div className="flex-1 flex relative overflow-hidden">
 
         {/* ── LEFT FLOATING BRASS TOOLBAR ── */}
-        <div className="absolute top-6 left-6 z-30 flex flex-col items-center p-1.5 rounded-md border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md shadow-2xl space-y-1">
+        <div className="absolute top-6 left-6 z-30 flex flex-col items-stretch p-1.5 rounded-md border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md shadow-2xl space-y-1 w-28">
           <button
             onClick={() => setActiveTool('pan')}
             title="Pan Tool"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'pan' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'pan' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <Hand className="w-4 h-4" />
+            <Hand className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Pan</span>
           </button>
           <button
             onClick={() => setActiveTool('select')}
             title="Select Tool"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'select' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'select' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <MousePointer className="w-4 h-4" />
+            <MousePointer className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Select</span>
           </button>
           <button
             onClick={() => setActiveTool('pin')}
             title="Pin Tool"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'pin' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'pin' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <Pin className="w-4 h-4" />
+            <Pin className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Add Pin</span>
           </button>
           <button
             onClick={() => setActiveTool('string')}
             title="Connect String Tool"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'string' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'string' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <Link className="w-4 h-4" />
+            <Link className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Connect</span>
           </button>
           <button
             onClick={() => setActiveTool('box')}
             title="Select Box"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'box' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'box' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <BoxSelect className="w-4 h-4" />
+            <BoxSelect className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Area</span>
           </button>
           <button
             onClick={() => setActiveTool('text')}
             title="Text Note"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'text' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'text' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <Type className="w-4 h-4" />
+            <Type className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Note</span>
           </button>
           <button
             onClick={() => setActiveTool('location')}
             title="Location Pin"
-            className={cn("p-2 rounded-sm transition-colors", activeTool === 'location' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", activeTool === 'location' ? "bg-[#c89b3c] text-[#1a1008]" : "text-[#8b7a5a] hover:text-[#c89b3c]")}
           >
-            <MapPin className="w-4 h-4" />
+            <MapPin className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Location</span>
           </button>
           <button 
             onClick={handleUndo} 
             title="Undo" 
-            className={cn("p-2 rounded-sm transition-colors", history.length > 0 ? "text-[#8b7a5a] hover:text-[#c89b3c]" : "text-[#5a3b1c] opacity-50 cursor-not-allowed")}
+            className={cn("p-2 flex items-center gap-2 rounded-sm transition-colors text-left", history.length > 0 ? "text-[#8b7a5a] hover:text-[#c89b3c]" : "text-[#5a3b1c] opacity-50 cursor-not-allowed")}
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-4 h-4 shrink-0" />
+            <span className="font-mono text-[9px] uppercase tracking-wider font-bold">Undo</span>
           </button>
 
-          <div className="w-6 h-[1px] bg-[#5a3b1c]/30 my-1" />
+          <div className="w-full h-[1px] bg-[#5a3b1c]/30 my-2" />
 
           {/* Zoom Controls */}
-          <button onClick={() => setZoomLevel((z) => Math.min(z + 10, 150))} title="Zoom In" className="p-2 text-[#8b7a5a] hover:text-[#c89b3c]">
-            <Plus className="w-4 h-4" />
-          </button>
-          <span className="font-mono text-[9px] text-[#c89b3c] font-bold py-0.5">{zoomLevel}%</span>
-          <button onClick={() => setZoomLevel((z) => Math.max(z - 10, 70))} title="Zoom Out" className="p-2 text-[#8b7a5a] hover:text-[#c89b3c]">
-            <Minus className="w-4 h-4" />
-          </button>
+          <div className="flex items-center justify-between px-1 pb-1">
+            <button onClick={() => setZoomLevel((z) => Math.max(z - 10, 70))} title="Zoom Out" className="text-[#8b7a5a] hover:text-[#c89b3c]">
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="font-mono text-[9px] text-[#c89b3c] font-bold">{zoomLevel}%</span>
+            <button onClick={() => setZoomLevel((z) => Math.min(z + 10, 150))} title="Zoom In" className="text-[#8b7a5a] hover:text-[#c89b3c]">
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* ── REALISTIC CORK WALL CANVAS AREA ── */}
