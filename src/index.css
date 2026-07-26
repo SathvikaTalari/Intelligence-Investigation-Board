@@ -23,6 +23,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
+  /* Buttons and Links should still use pointer */
+  button, a, [role="button"] {
+    cursor: pointer;
+  }
+  
   /* Refined Vintage scrollbar */
   ::-webkit-scrollbar {
     width: 8px;

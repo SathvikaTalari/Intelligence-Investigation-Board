@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInvestigationStore } from '../store/useInvestigationStore';
 import { Search, Bell, Folder, Eye, X, Filter, ChevronRight, MapPin, User, FileText, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { TypewriterText } from '../components/ui/TypewriterText';
+import { RedactedText } from '../components/ui/RedactedText';
 import { cn } from '../lib/utils';
 import type { Case } from '../types';
 
@@ -299,9 +301,11 @@ export function Dashboard() {
       >
 
         {/* ── PAGE HEADER ── */}
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start min-h-[48px]">
           <div>
-            <h1 className="font-playfair text-3xl text-[#f5e6c8] font-bold tracking-tight">Dashboard</h1>
+            <h1 className="font-playfair text-3xl text-[#f5e6c8] font-bold tracking-tight">
+              <TypewriterText text="Bureau Dashboard" speed={60} />
+            </h1>
             <p className="font-inter text-xs text-[#8b7a5a] mt-0.5">Overview of all investigations and bureau activities</p>
           </div>
         </div>
@@ -458,17 +462,19 @@ export function Dashboard() {
             </div>
             <div className="space-y-3">
               {[
-                { text: 'New evidence added in', case: 'The Blackwood Heist', time: '2h ago' },
-                { text: 'Witness statement recorded in', case: 'Riverfront Murders', time: '5h ago' },
-                { text: 'Suspect profile updated', case: 'James Moriarty', time: '8h ago' },
-                { text: 'Crime scene marked on map', case: 'Warehouse District', time: '10h ago' },
-                { text: 'Task completed', case: 'Analyze fingerprints', time: '12h ago' },
+                { text: 'New evidence added in', case: 'The Blackwood Heist', time: '2h ago', redacted: false },
+                { text: 'Witness statement recorded in', case: 'Riverfront Murders', time: '5h ago', redacted: false },
+                { text: 'Suspect profile updated', case: 'James Moriarty', time: '8h ago', redacted: true },
+                { text: 'Crime scene marked on map', case: 'Warehouse District', time: '10h ago', redacted: false },
+                { text: 'Task completed', case: 'Analyze fingerprints', time: '12h ago', redacted: true },
               ].map((act, i) => (
                 <div key={i} className="flex gap-2.5 items-start relative pl-3 border-l border-[#5a3b1c]/40">
                   <div className="absolute -left-1 top-1.5 w-2 h-2 rounded-full bg-[#c89b3c]" />
                   <div className="flex-1 min-w-0">
                     <p className="font-inter text-xs text-[#8b7a5a] leading-snug">{act.text}</p>
-                    <p className="font-playfair text-xs text-[#c89b3c] font-semibold truncate">{act.case}</p>
+                    <p className="font-playfair text-xs text-[#c89b3c] font-semibold truncate">
+                      {act.redacted ? <RedactedText>{act.case}</RedactedText> : act.case}
+                    </p>
                   </div>
                   <span className="font-mono text-[9px] text-[#5a4a2c] flex-shrink-0">{act.time}</span>
                 </div>

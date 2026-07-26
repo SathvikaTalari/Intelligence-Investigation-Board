@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, User, Lock } from 'lucide-react';
+import { TypewriterText } from '../components/ui/TypewriterText';
 
 export function Login() {
   const navigate = useNavigate();
@@ -9,6 +10,16 @@ export function Login() {
   const [remember, setRemember] = useState(false);
   const [sealBroken, setSealBroken] = useState(false);
   const [opening, setOpening] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,19 +31,26 @@ export function Login() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative flex items-center justify-center select-none font-inter">
+    <div ref={containerRef} className="h-screen w-screen overflow-hidden relative flex items-center justify-center select-none font-inter">
       {/* === PHOTOREALISTIC BACKGROUND SCENE === */}
       <div className="absolute inset-0 z-0 bg-[#0c0804]">
         {/* Background image asset */}
         <img
           src="/detective_bg.png"
           alt="Detective Office Desk"
-          className="w-full h-full object-cover object-center filter brightness-[0.75] contrast-[1.15] sepia-[0.25]"
+          className="w-full h-full object-cover object-center filter brightness-[0.9] contrast-[1.1] sepia-[0.2]"
         />
 
         {/* Ambient lighting overlays for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,transparent_20%,rgba(0,0,0,0.75)_100%)] pointer-events-none" />
+        
+        {/* Interactive Spotlight (Flashlight) */}
+        <div 
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle 450px at ${mousePos.x}px ${mousePos.y}px, rgba(255,245,210,0.4), rgba(0,0,0,0.7) 80%)`,
+          }}
+        />
 
         {/* Film grain noise filter */}
         <div
@@ -155,9 +173,9 @@ export function Login() {
                 <div className="flex-1 h-[1px] bg-[#5a3b1c]/35" />
               </div>
 
-              <p className="font-inter text-[#4a2e14]/90 text-[8px] font-bold tracking-[0.15em] uppercase text-center mt-0.5">
-                ORGANIZE. CONNECT. ANALYZE. UNCOVER THE TRUTH.
-              </p>
+              <div className="font-inter text-[#4a2e14]/90 text-[8px] font-bold tracking-[0.15em] uppercase text-center mt-0.5 min-h-[14px]">
+                <TypewriterText text="ORGANIZE. CONNECT. ANALYZE. UNCOVER THE TRUTH." delay={1200} speed={40} />
+              </div>
             </div>
 
             {/* === FORM INPUTS === */}

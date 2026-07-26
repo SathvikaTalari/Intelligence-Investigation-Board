@@ -182,12 +182,12 @@ export function MapPage() {
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-4 gap-4 mb-5">
 
         {/* ── LEFT & CENTER: MAP CANVAS (3 COLUMNS) ── */}
-        <div className="lg:col-span-3 h-[580px] relative rounded-sm border border-[#5a3b1c]/40 overflow-hidden shadow-2xl bg-[#1c1308]">
+        <div className="lg:col-span-3 h-[580px] relative rounded-sm border border-[#5a3b1c]/40 overflow-auto custom-scrollbar shadow-2xl bg-[#1c1308]">
 
           {/* Zoom Container */}
           <div
-            className="w-full h-full relative transition-transform duration-200"
-            style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'center center' }}
+            className="w-[1600px] h-[1000px] relative transition-transform duration-200"
+            style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top left' }}
           >
             {/* Vintage Parchment City Map Background */}
             <img
@@ -373,8 +373,8 @@ export function MapPage() {
 
           </div>
 
-          {/* Map Controls Stack (Top Right Overlay) */}
-          <div className="absolute top-4 right-4 z-30 flex flex-col rounded-sm border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md shadow-2xl divide-y divide-[#5a3b1c]/30">
+          {/* Map Controls Stack (Top Right Overlay - Fixed to viewport) */}
+          <div className="sticky top-4 float-right mr-4 mt-4 z-30 flex flex-col rounded-sm border border-[#5a3b1c]/40 bg-[#1a1208]/90 backdrop-blur-md shadow-2xl divide-y divide-[#5a3b1c]/30">
             <button onClick={() => setZoom((z) => Math.min(z + 15, 160))} className="p-2 text-[#8b7a5a] hover:text-[#c89b3c]">
               <Plus className="w-4 h-4" />
             </button>

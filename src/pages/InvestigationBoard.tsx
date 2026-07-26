@@ -320,15 +320,96 @@ function PushPin() {
 
 export function InvestigationBoard() {
   const [nodes, setNodes] = useState<BoardNode[]>(initialNodes);
-  const [connections] = useState<Connection[]>(initialConnections);
+  const [connections, setConnections] = useState<Connection[]>(initialConnections);
   const [activeTool, setActiveTool] = useState<'pan' | 'select' | 'pin' | 'string' | 'box' | 'text' | 'location'>('pan');
   const [zoomLevel, setZoomLevel] = useState(100);
   const [addItemModalOpen, setAddItemModalOpen] = useState(false);
   const [newItemTitle, setNewItemTitle] = useState('');
   const [newItemType, setNewItemType] = useState<'note' | 'photo' | 'document'>('note');
   const [newItemContent, setNewItemContent] = useState('');
+  const [newItemImage, setNewItemImage] = useState('');
 
+  // Interactive Tools State
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
+  const [isPanning, setIsPanning] = useState(false);
+  const [sourceNodeId, setSourceNodeId] = useState<string | null>(null);
+  const [history, setHistory] = useState<{type: 'node' | 'connection', data: any}[]>([]);
+
+  // Panning Handlers
+  const handleBoardMouseDown = (e: React.MouseEvent) => {
+    if (activeTool === 'pan') {
+      setIsPanning(true);
+    }
+  };
+
+  const handleBoardMouseMove = (e: React.MouseEvent) => {
+    if (isPanning && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft -= e.movementX;
+      scrollContainerRef.current.scrollTop -= e.movementY;
+    }
+  };
+
+  const handleBoardMouseUp = (e: React.MouseEvent) => {
+    if (isPanning) {
+      setIsPanning(false);
+      return;
+    }
+
+    // Click-to-add functionality for Note, Pin, Text, Location tools
+    if (activeTool !== 'select' && activeTool !== 'pan' && activeTool !== 'string' && activeTool !== 'box') {
+      if (scrollContainerRef.current && boardRef.current) {
+        const rect = boardRef.current.getBoundingClientRect();
+        // Calculate coordinates relative to the board, factoring in zoom
+        const x = (e.clientX - rect.left) / (zoomLevel / 100);
+        const y = (e.clientY - rect.top) / (zoomLevel / 100);
+
+        const newNode: BoardNode = {
+          id: `custom-${Date.now()}`,
+          type: 'note',
+          title: activeTool === 'location' ? 'LOCATION NOTE' : 'NEW NOTE',
+          content: 'Click to edit...',
+          x: x - 85, // center the node (170 width / 2)
+          y: y - 65, // approx center height
+          rotate: (Math.random() * 6 - 3),
+          width: 170,
+        };
+
+        setNodes(prev => [...prev, newNode]);
+        setHistory(prev => [...prev, { type: 'node', data: newNode }]);
+        setActiveTool('select'); // revert back to select
+      }
+    }
+  };
+
+  // Node Interaction Handler
+  const handleNodeClick = (e: React.MouseEvent, id: string) => {
+    if (activeTool === 'string') {
+      e.stopPropagation();
+      if (!sourceNodeId) {
+        setSourceNodeId(id);
+      } else {
+        if (sourceNodeId !== id) {
+          const newConn = { from: sourceNodeId, to: id };
+          setConnections(prev => [...prev, newConn]);
+          setHistory(prev => [...prev, { type: 'connection', data: newConn }]);
+        }
+        setSourceNodeId(null);
+      }
+    }
+  };
+
+  // Undo Handler
+  const handleUndo = () => {
+    if (history.length === 0) return;
+    const lastAction = history[history.length - 1];
+    if (lastAction.type === 'node') {
+      setNodes(prev => prev.filter(n => n.id !== lastAction.data.id));
+    } else if (lastAction.type === 'connection') {
+      setConnections(prev => prev.filter(c => !(c.from === lastAction.data.from && c.to === lastAction.data.to)));
+    }
+    setHistory(prev => prev.slice(0, -1));
+  };
 
   // Update Node position on drag
   const handleDrag = (id: string, info: any) => {
@@ -356,6 +437,7 @@ export function InvestigationBoard() {
       type: newItemType,
       title: newItemTitle.toUpperCase() || 'NEW EVIDENCE',
       content: newItemContent,
+      image: newItemType === 'photo' ? newItemImage : undefined,
       x: 500 + (Math.random() * 100 - 50),
       y: 350 + (Math.random() * 100 - 50),
       rotate: (Math.random() * 6 - 3),
@@ -363,9 +445,11 @@ export function InvestigationBoard() {
     };
 
     setNodes((prev) => [...prev, newNode]);
+    setHistory(prev => [...prev, { type: 'node', data: newNode }]);
     setAddItemModalOpen(false);
     setNewItemTitle('');
     setNewItemContent('');
+    setNewItemImage('');
   };
 
   // Map of Node Center Positions for dynamic SVG red strings
@@ -491,7 +575,11 @@ export function InvestigationBoard() {
           >
             <MapPin className="w-4 h-4" />
           </button>
-          <button title="Undo" className="p-2 rounded-sm text-[#8b7a5a] hover:text-[#c89b3c] transition-colors">
+          <button 
+            onClick={handleUndo} 
+            title="Undo" 
+            className={cn("p-2 rounded-sm transition-colors", history.length > 0 ? "text-[#8b7a5a] hover:text-[#c89b3c]" : "text-[#5a3b1c] opacity-50 cursor-not-allowed")}
+          >
             <RotateCcw className="w-4 h-4" />
           </button>
 
@@ -508,16 +596,29 @@ export function InvestigationBoard() {
         </div>
 
         {/* ── REALISTIC CORK WALL CANVAS AREA ── */}
-        <div
-          ref={boardRef}
-          className="flex-1 h-full relative overflow-hidden cursor-grab active:cursor-grabbing"
-          style={{
-            background: 'radial-gradient(circle at 50% 50%, #3a2818 0%, #25170b 60%, #150a03 100%)',
-            transform: `scale(${zoomLevel / 100})`,
-            transformOrigin: 'center center',
-            transition: 'transform 0.2s ease-out',
-          }}
+        <div 
+          ref={scrollContainerRef}
+          className={cn(
+            "flex-1 h-full relative overflow-auto custom-scrollbar",
+            activeTool === 'pan' ? "cursor-grab active:cursor-grabbing" :
+            activeTool === 'string' ? "cursor-crosshair" :
+            (activeTool !== 'select' && activeTool !== 'box') ? "cursor-copy" : ""
+          )}
+          onMouseDown={handleBoardMouseDown}
+          onMouseMove={handleBoardMouseMove}
+          onMouseUp={handleBoardMouseUp}
+          onMouseLeave={handleBoardMouseUp}
         >
+          <div
+            ref={boardRef}
+            className="w-[2000px] h-[1200px] relative"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, #3a2818 0%, #25170b 60%, #150a03 100%)',
+              transform: `scale(${zoomLevel / 100})`,
+              transformOrigin: 'top left',
+              transition: 'transform 0.2s ease-out',
+            }}
+          >
           {/* Cork Surface Texture Overlay */}
           <div
             className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none"
@@ -551,16 +652,22 @@ export function InvestigationBoard() {
           {nodes.map((node, idx) => (
             <motion.div
               key={node.id}
-              drag
+              drag={activeTool === 'select'}
               dragMomentum={false}
               dragElastic={0.05}
+              onClick={(e) => handleNodeClick(e, node.id)}
               onDrag={(_, info) => handleDrag(node.id, info)}
               initial={{ opacity: 0, scale: 0.8, x: node.x, y: node.y, rotate: node.rotate - 10 }}
               animate={{ opacity: 1, scale: 1, x: node.x, y: node.y, rotate: node.rotate }}
               transition={{ type: 'spring', stiffness: 300, damping: 24, delay: idx * 0.05 }}
               whileHover={{ scale: 1.04, zIndex: 50 }}
               whileDrag={{ scale: 1.08, zIndex: 100 }}
-              className="absolute z-20 cursor-grab active:cursor-grabbing origin-top-left group"
+              className={cn(
+                "absolute z-20 origin-top-left group",
+                activeTool === 'select' ? "cursor-grab active:cursor-grabbing" :
+                activeTool === 'string' ? "cursor-pointer" : "",
+                sourceNodeId === node.id ? "ring-4 ring-[#8b2e2e] shadow-2xl scale-105" : ""
+              )}
               style={{ width: node.width || 170 }}
             >
               {/* Pushpin at Node Top Center */}
@@ -690,13 +797,14 @@ export function InvestigationBoard() {
                   key={n.id}
                   className="absolute w-1.5 h-1.5 rounded-full bg-[#c89b3c]"
                   style={{
-                    left: `${(n.x / 1300) * 100}%`,
-                    top: `${(n.y / 850) * 100}%`,
+                    left: `${(n.x / 2000) * 100}%`,
+                    top: `${(n.y / 1200) * 100}%`,
                   }}
                 />
               ))}
             </div>
           </div>
+        </div>
         </div>
 
         {/* ── RIGHT FLOATING INSPECTOR PANEL ── */}
@@ -859,6 +967,19 @@ export function InvestigationBoard() {
                     className="w-full bg-[#f5e6c8] border border-[#5a3b1c] p-2 text-xs text-[#2a1505] focus:outline-none"
                   />
                 </div>
+
+                {newItemType === 'photo' && (
+                  <div>
+                    <label className="block text-xs font-bold text-[#5a3b1c] uppercase mb-1">Image URL</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. https://example.com/photo.jpg"
+                      value={newItemImage}
+                      onChange={(e) => setNewItemImage(e.target.value)}
+                      className="w-full bg-[#f5e6c8] border border-[#5a3b1c] p-2 text-xs text-[#2a1505] focus:outline-none"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-xs font-bold text-[#5a3b1c] uppercase mb-1">Content / Details</label>
